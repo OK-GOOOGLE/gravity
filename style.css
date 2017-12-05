@@ -1,0 +1,44 @@
+
+ html, body {
+ 	color: white;
+	background-color: black;
+	font-family: "Arial Black", Gadget, sans-serif;
+}
+
+#canvas {
+	background-color: white;
+	position: absolute;
+	
+	/*z-index: 100;*/
+	border-style: solid;
+	border-color: white;
+	top: 10%;
+	left: 30%;
+}
+
+.controlButtons {
+	color: black;
+	background-color: white;
+	text-align: center;
+	float: left;
+	width: 10%;
+	height: 5%;
+	padding: 20px;
+	outline: solid;
+	border-style: solid;
+	border-color: black;
+	border-width: 20px;
+	/*outline-width: 20px;
+	outline-color: black;*/
+
+}
+
+#right {
+	position: absolute;
+	top: 150px;
+	left: 400px;
+}
+
+.inputCoord {
+	width: 5%;
+}
