@@ -10,23 +10,43 @@
     <p>Gravitaty</p>
         
         <p></p> 
-        <div>
+      <!--   <div id="contrButWrapper">
           <div class="controlButtons" id="start">Start</div>
           <div class="controlButtons" id="reset">Reset</div>
-        </div>
+          <div class="generate">
+              <div>Generate random</div>
+          </div>
+        </div> -->
+
+        <table id="controls">
+          <tr>
+              <td id="start">Start</td>
+              <td id="reset">Reset</td>
+          </tr>
+            <td colspan="2" id="generate">Generate Random</td>
+          <tr>
+            
+          </tr>
+        </table>
         <p id="demo2">&nbsp;</div>
         <p id="demo3">&nbsp;</div>
         <p id="demo4">&nbsp;</div>
 
-          
-        <div id ="speed"></div>
-        <div id ="numOfBodies"></div>
-        <div id="demo">&nbsp;</div>
+        <div class="info">
+          <div  id="speed"></div>
+          <div id="numOfBodies"></div>
+          <div id="demo">&nbsp;</div>
+        </div>
 
+        <div id="divcanvas">
+          <canvas id="canvas" width="1800" height="1800"></canvas>
+        </div>
 
-        <canvas id="canvas" width="1000" height="1000"></canvas>
-
-        
+        <table id >
+          <tr>
+            <td id="help">Help</td>
+          </tr>
+        </table>
 
         <script type="text/javascript" src="gravity.js"></script>
 

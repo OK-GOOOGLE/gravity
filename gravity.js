@@ -5,7 +5,7 @@ var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 var G = 10e-1;
 var running = undefined; // flag to check if the simulation is running (prevents multiple animations at the same time).
-var startInteraction = false;
+var startInteraction = false; // if this flag is false - draw only bodies itself (without calculating their accelerations)
 var speed = 1;
 
 var isMousePressed = false;
@@ -94,6 +94,10 @@ function updateBodiesAcceler(){
 
     for (var i = 0; i < bodies.length; i++){     // ... calculate resulting acceleration ...
       if (typeof bodies[cur] == "undefined") continue; // ... avoiding situation in which the current body was merged ...
+      if(Math.abs(bodies[cur].x) > 10000 ||  Math.abs(bodies[cur].y) > 10000){ 
+            bodies.splice(cur, 1);
+            continue; // if body is far beyond the canvas
+          }
       if (i != cur){                             // ... and not considering the current one 
         var distBase = (bodies[i].x - bodies[cur].x)*(bodies[i].x - bodies[cur].x) + (bodies[i].y - bodies[cur].y)*(bodies[i].y - bodies[cur].y);
         var dist = Math.sqrt(distBase);
@@ -137,7 +141,7 @@ function bodyVectorOnHold(){
 
 function drawOnCanvas(){
     running = undefined;
-    if (startInteraction){
+    if (startInteraction){ 
       var date = new Date();
       // ctx.clearRect(0, 0, 1000, 1000);
       if (bodies.length > 0) {
@@ -239,6 +243,7 @@ $("canvas").mousemove(function(e) {
     cursorY = (e.clientY - rect.top) * scaleY;
 });
 
+
 /*MOUSEDOWN: drawing a line representing the velocity of a new body*/
 $("canvas").mousedown(function(e) {
     rect = canvas.getBoundingClientRect();
@@ -275,6 +280,8 @@ $(document).keydown(function(e) {
     }
     updateTextInfo();
 });
+
+
 
 // window.addEventListener('resize', function(e) {
 //                       correctXY();
