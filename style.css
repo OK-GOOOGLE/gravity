@@ -3,7 +3,14 @@ html, body {
 	background-color: black;
 	font-family: "Arial Black", Gadget, sans-serif;
 }
+ul{
+	list-style-type: none;
+	width: 90%;
+}
+li {
 
+
+}
 #canvas {
 	background-color: white;
 	position: relative;
@@ -37,7 +44,7 @@ html, body {
 	position: relative;
 	vertical-align: middle;
 	color: black;
-	background-color: white;
+	/*background-color: white;   !!!!!!!!!!*/
 	
 	/*float: left;*/
 	width: 46%;
@@ -64,7 +71,6 @@ html, body {
 	height: 100px;
 
 	height: 50px;
-	/*outline: solid;*/
 	border: 10px solid black;
 }
 
@@ -87,6 +93,7 @@ html, body {
 
 #help {
 	position: absolute;
+	text-align: center;
 	bottom : 10%;
 	left: 10px;
 	border: 5px solid black;
@@ -98,22 +105,8 @@ html, body {
 #help:hover, #start:hover,
 #reset:hover, #generate:hover {
 	border: 5px solid white;
-	/*animation: blink 0.5s;
-	animation-fill-mode: forwards;*/
+
 }
-
-.blink {
-	animation: blink 0.5s;
-	animation-fill-mode: forwards;
-}
-
-.fade {
-	animation: fade 0.5s;
-	animation-fill-mode: forwards;
-	/*animation-direction: reverse;*/
-}
-
-
 
 
 .info {
@@ -121,3 +114,30 @@ html, body {
 	top: 30%;
 }
 
+.drop {
+	/*position: relative;
+    display: inline-block;
+    bottom : 20px;
+	left: 10px;
+	width: 30%;*/
+}
+
+.dropContent{
+	 display: none;
+	 position: absolute;
+	 top: 65%;
+	 left: 1%;
+	 z-index: 1;
+	 transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s, z-index 0s linear 0.01s;
+}
+
+.show {
+	/*-webkit-transition: border 0.5s;*/
+	border: 5px solid black;
+	display:block;
+	transition-delay: 0s, 0s, 0.3s;
+}
+
+/*:hover {
+	border: 5px solid white;
+}*/

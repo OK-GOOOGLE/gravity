@@ -4,7 +4,11 @@
   <title>Gravity</title>
   <meta content="text/html; charset=UTF-8" />
   <link type="text/css" href="style.css" rel="stylesheet" />
+
+<!-- LIBRARIES -->
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
   </head>
   <body>
     <p>Gravitaty</p>
@@ -42,11 +46,21 @@
           <canvas id="canvas" width="1800" height="1800"></canvas>
         </div>
 
-        <table id >
-          <tr>
-            <td id="help">Help</td>
-          </tr>
-        </table>
+        <div class="drop">
+          <table>
+            <tr><td id="help">Help </td></tr>
+          </table>
+          <div class="dropContent" id="firstDropDown">
+            <p>Welcome to Gravitaty!</p>
+            <p>Use a cursor to place bodies on the canvas.</p>
+            <p>Drag the cursor to set an initial speed to the new body.</p>
+            <p>Press "start" to begin the interaction between placed bodies.</p>
+            <p>Bodies can merge with respectively increased mass and radius.</p>
+            <p>Press reset to clear the canvas and start from the scratch.</p>
+            <p>Enjoy.</p>
+          </div>
+
+        </div>
 
         <script type="text/javascript" src="gravity.js"></script>
 

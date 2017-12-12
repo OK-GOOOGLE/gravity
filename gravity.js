@@ -94,7 +94,7 @@ function updateBodiesAcceler(){
 
     for (var i = 0; i < bodies.length; i++){     // ... calculate resulting acceleration ...
       if (typeof bodies[cur] == "undefined") continue; // ... avoiding situation in which the current body was merged ...
-      if(Math.abs(bodies[cur].x) > 10000 ||  Math.abs(bodies[cur].y) > 10000){ 
+      if(Math.abs(bodies[cur].x) > 5000 ||  Math.abs(bodies[cur].y) > 5000){ 
             bodies.splice(cur, 1);
             continue; // if body is far beyond the canvas
           }
@@ -227,9 +227,23 @@ function reset(){
 }
 
 
+function generateRandBodies(){
+  for (var i = 0; i <= 30; i++){
+    var newBody = new Body(bodies.length, Math.floor(Math.random() * canvas.width),
+                                          Math.floor(Math.random() * canvas.height), 10, 100, 
+                                          Math.random() - 0.5, 
+                                          Math.random() - 0.5);
+    bodies.push(newBody);
+  }    
+  startSimulation();
+}
 
 
 /* EVENTS */
+
+$("#help").click(function(){
+                            document.getElementById("firstDropDown").classList.toggle("show");
+                            });
 
 $("#start").click(function(){
                               startInteraction = true;
@@ -243,6 +257,7 @@ $("canvas").mousemove(function(e) {
     cursorY = (e.clientY - rect.top) * scaleY;
 });
 
+$("#generate").click(generateRandBodies); // #... = id selector
 
 /*MOUSEDOWN: drawing a line representing the velocity of a new body*/
 $("canvas").mousedown(function(e) {
@@ -281,11 +296,6 @@ $(document).keydown(function(e) {
     updateTextInfo();
 });
 
-
-
-// window.addEventListener('resize', function(e) {
-//                       correctXY();
-// });
 
 
 updateTextInfo();
