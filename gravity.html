@@ -11,16 +11,11 @@
 
   </head>
   <body>
-    <p>Gravitaty</p>
+    
+      <p>Gravitaty  </p>
+          
         
-        <p></p> 
-      <!--   <div id="contrButWrapper">
-          <div class="controlButtons" id="start">Start</div>
-          <div class="controlButtons" id="reset">Reset</div>
-          <div class="generate">
-              <div>Generate random</div>
-          </div>
-        </div> -->
+        <p></p>  
 
         <table id="controls">
           <tr>
@@ -29,42 +24,53 @@
           </tr>
             <td colspan="2" id="generate">Generate Random</td>
           <tr>
+          </tr>
+            <td colspan="2" id="followHeavy">Focus on the Heaviest Body</td>
+          <tr>
             
           </tr>
         </table>
-        <p id="demo2">&nbsp;</div>
-        <p id="demo3">&nbsp;</div>
-        <p id="demo4">&nbsp;</div>
+        <p id="demo2">&nbsp;
+        <p id="demo3">&nbsp;
+        <p id="demo4">&nbsp;
 
         <div class="info">
           <div  id="speed"></div>
+          <!-- <hr /> -->
           <div id="numOfBodies"></div>
           <div id="demo">&nbsp;</div>
         </div>
 
         <div id="divcanvas">
-          <canvas id="canvas" width="1800" height="1800"></canvas>
+          <canvas id="canvas" width="900" height="900"></canvas>
         </div>
 
         <div class="drop">
-          <table>
-            <tr><td id="help">Help </td></tr>
-          </table>
+          
           <div class="dropContent" id="firstDropDown">
-            <p>Welcome to Gravitaty!</p>
-            <p>Use a cursor to place bodies on the canvas.</p>
-            <p>Drag the cursor to set an initial speed to the new body.</p>
-            <p>Press "start" to begin the interaction between placed bodies.</p>
-            <p>Bodies can merge with respectively increased mass and radius.</p>
-            <p>Press reset to clear the canvas and start from the scratch.</p>
-            <p>Enjoy.</p>
+              
+
+              <h1>Welcome to Gravitaty!</h1>
+              <hr />
+              <p>Use the cursor to place bodies on the canvas.</p>
+              <p>Drag the cursor to set an initial speed of the new body.</p>
+              <p>Press "start" to begin the interaction between placed bodies.</p>
+              <p>Use arrow keys to change the speed of animation.</p>
+              <p>Bodies can merge with respectively increased mass and radius.</p>
+              <p>Press Reset to clear the canvas and to start from scratch.</p>
+              <p>Enjoy.</p>
+
           </div>
+
+            <table>
+              <tr><td id="help">Help </td></tr>
+            </table>
 
         </div>
 
         <script type="text/javascript" src="gravity.js"></script>
 
         <!-- <svg id="svgg" height="300px" width="300px"></svg> -->
-        
+    
   </body>
 </html>

@@ -3,11 +3,12 @@
 // fps = 60;
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
-var G = 10e-1;
+var G = 8e-1;
 var running = undefined; // flag to check if the simulation is running (prevents multiple animations at the same time).
 var startInteraction = false; // if this flag is false - draw only bodies itself (without calculating their accelerations)
 var speed = 1;
-
+radius = 6
+helpShowed = false // flag to animate help info
 var isMousePressed = false;
 
 var
@@ -17,8 +18,9 @@ var
 var preCursorX, preCursorX; // store coordinates at the moment of 'mousedown'
 var rect = canvas.getBoundingClientRect();
 var correctX = Math.floor(rect.left);
-var correctY = Math.floor(rect.top);
+var correctY = Math.floor(rect.top); // for getting correct cursor position
 
+var distanceFromCenterX, distanceFromCenterY; // "Focus on the heaviest"
 function correctXY(){
     rect = canvas.getBoundingClientRect();
     scaleX = canvas.width / rect.width;
@@ -94,12 +96,13 @@ function updateBodiesAcceler(){
 
     for (var i = 0; i < bodies.length; i++){     // ... calculate resulting acceleration ...
       if (typeof bodies[cur] == "undefined") continue; // ... avoiding situation in which the current body was merged ...
-      if(Math.abs(bodies[cur].x) > 5000 ||  Math.abs(bodies[cur].y) > 5000){ 
+      if(Math.abs(bodies[cur].x) > 4000 ||  Math.abs(bodies[cur].y) > 4000){ // delete "lost" bodies
             bodies.splice(cur, 1);
             continue; // if body is far beyond the canvas
-          }
+      }
       if (i != cur){                             // ... and not considering the current one 
-        var distBase = (bodies[i].x - bodies[cur].x)*(bodies[i].x - bodies[cur].x) + (bodies[i].y - bodies[cur].y)*(bodies[i].y - bodies[cur].y);
+        var distBase = (bodies[i].x - bodies[cur].x)*(bodies[i].x - bodies[cur].x) + 
+                       (bodies[i].y - bodies[cur].y)*(bodies[i].y - bodies[cur].y);
         var dist = Math.sqrt(distBase);
         
         if (dist > bodies[cur].r){ 
@@ -108,11 +111,13 @@ function updateBodiesAcceler(){
         }
         else /*if collision detected*/{
             bodies[cur].m += bodies[i].m;
-            if (bodies[cur].r > bodies[i].r)
-              bodies[cur].r += Math.pow(bodies[i].r, 1/3);
-            else
-              bodies[cur].r = bodies[i].r + Math.pow(bodies[cur].r, 1/3);
-            
+            if (bodies[cur].r < 70 && bodies[i].r < 70){ // max raduis
+              if (bodies[cur].r > bodies[i].r)
+                bodies[cur].r += Math.pow(bodies[i].r, 1/3);
+              else
+                bodies[cur].r = bodies[i].r + Math.pow(bodies[cur].r, 1/3);
+            }
+
             // bodies[cur].ax = 0.0;
             // bodies[cur].ay = 0.0;
             bodies[cur].vx = 0.0;
@@ -133,10 +138,9 @@ function bodyVectorOnHold(){
       ctx.lineTo(cursorX, cursorY);
       ctx.stroke();
 
-      // ctx.moveTo(cursorX, cursorY);
-      var tempBody = new Body(0, preCursorX, preCursorY, 10, 0, 0, 0);
+      var tempBody = new Body(0, preCursorX, preCursorY, radius, 0, 0, 0);
       tempBody.draw();
-    }
+  }
 }
 
 function drawOnCanvas(){
@@ -145,16 +149,13 @@ function drawOnCanvas(){
       var date = new Date();
       // ctx.clearRect(0, 0, 1000, 1000);
       if (bodies.length > 0) {
-      var xmax = hasMax('x').x;
-      var ymax = hasMax('y').y;
-      var xmin = hasMin('x').x;
-      var ymin = hasMin('y').y;
+        var xmax = hasMax('x').x;
+        var ymax = hasMax('y').y;
+        var xmin = hasMin('x').x;
+        var ymin = hasMin('y').y;
       }
 
-      // if (xmax > 1000 || xmin < 0 || ymax > 1000 || ymin < 0)
-      //     rescale(xmax, ymax, xmin, ymin);
-      // else 
-          setNormCanvasCoord();
+      setNormCanvasCoord();
 
 
       /* before changing bodies' velocities we have to calculate their acceleration*/
@@ -163,28 +164,14 @@ function drawOnCanvas(){
         for (var i = 0; i < bodies.length; i++){
             bodies[i].updatePos();
         }
-      }
-
-      
+      }  
     }
     
-    // var text  = isMousePressed + " govno";
-    // var text2 = bodies[1].x_canvas +" " + bodies[1].y_canvas+";; "+bodies[1].x +" " + bodies[1].y;
-    // var text3 = bodies[2].x_canvas +" " + bodies[2].y_canvas;
-    // var text4 = " xmax : " + xmax + " xmin: " + xmin + " ymax: " + ymax + " ymin: " + ymin;
-    // document.getElementById("demo").innerHTML = text; 
-    // document.getElementById("demo2").innerHTML = text2; 
-    // document.getElementById("demo3").innerHTML = text3; 
-    // document.getElementById("demo4").innerHTML = text4; // debugging
-    
-    for (var i = 0; i < bodies.length; i++){
-          bodies[i].draw();
-    }
+    for (var i = 0; i < bodies.length; i++) bodies[i].draw();
 
     ctx.fillStyle = 'rgba(0, 0, 0, 0.07)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     
-
     bodyVectorOnHold(); // visualize the initial velocity of a new body
     updateTextInfo();
     startSimulation(); // loop the animation
@@ -198,9 +185,7 @@ function updateTextInfo(){
 }
 
 function startSimulation() {
-  if (!running){ 
-    running = window.requestAnimationFrame(drawOnCanvas);
-   }
+  if (!running) running = window.requestAnimationFrame(drawOnCanvas);
 }
 
 function fadeOnReset(k){
@@ -230,24 +215,49 @@ function reset(){
 function generateRandBodies(){
   for (var i = 0; i <= 30; i++){
     var newBody = new Body(bodies.length, Math.floor(Math.random() * canvas.width),
-                                          Math.floor(Math.random() * canvas.height), 10, 100, 
-                                          Math.random() - 0.5, 
-                                          Math.random() - 0.5);
+                                          Math.floor(Math.random() * canvas.height), radius, 100, 
+                                          (Math.random() - 0.5) * 6, 
+                                          (Math.random() - 0.5) * 6);
     bodies.push(newBody);
   }    
   startSimulation();
 }
 
+function findTheHeaviest(){
+  var max = 0;
+  for (var i = 1; i < bodies.length; i++){
+    if (bodies[i].m > bodies[max].m) max = i;
+  }
+  return max;
+}
 
 /* EVENTS */
 
+
+
+
 $("#help").click(function(){
-                            document.getElementById("firstDropDown").classList.toggle("show");
+                            // $("#firstDropDown").toggleClass("show");
+
+                            if (helpShowed)
+                            {
+                              $("#firstDropDown").removeClass("show");
+                              $("#firstDropDown").addClass("hide");
+                              helpShowed = false;
+                            }
+                            else {
+                              $("#firstDropDown").removeClass("hide");
+                              $("#firstDropDown").addClass("show");
+                              helpShowed = true;
+                            }
+                            
+                            // $("#firstDropDown").fadeIn();
                             });
 
 $("#start").click(function(){
                               startInteraction = true;
                               startSimulation();
+                              // $("#firstDropDown").fadeOut();
                             });
 
 $("#reset").click(reset); // #... = id selector
@@ -258,6 +268,17 @@ $("canvas").mousemove(function(e) {
 });
 
 $("#generate").click(generateRandBodies); // #... = id selector
+
+$("#followHeavy").click(function(){
+                              var max = findTheHeaviest();
+                              distanceFromCenterX = bodies[max].x - canvas.width / 2;
+                              distanceFromCenterY = bodies[max].y - canvas.height / 2;
+                              for (var i = 0; i < bodies.length; i++){
+                                bodies[i].x -= distanceFromCenterX;
+                                bodies[i].y -= distanceFromCenterY;
+                              }
+                            });
+
 
 /*MOUSEDOWN: drawing a line representing the velocity of a new body*/
 $("canvas").mousedown(function(e) {
@@ -273,7 +294,7 @@ $("canvas").mousedown(function(e) {
 $("canvas").mouseup(function(e) {
     var newVX = (cursorX - preCursorX) / 100.0;
     var newVY = (cursorY - preCursorY) / 100.0;
-    var newBody = new Body(bodies.length, preCursorX, preCursorY, 10, 100, newVX, newVY);
+    var newBody = new Body(bodies.length, preCursorX, preCursorY, radius, 100, newVX, newVY);
     bodies.push(newBody);
 
     updateBodiesAcceler();
@@ -288,11 +309,12 @@ $("canvas").mouseup(function(e) {
 $(document).keydown(function(e) {
     if (e.keyCode == 38){ // arrow up
         speed++;
-    } else 
-    if (e.keyCode == 40){ // arrow down
-      if (speed > 1)
-        speed--;
-    }
+    } 
+    else 
+      if (e.keyCode == 40){ // arrow down
+        if (speed > 1)
+          speed--;
+      }
     updateTextInfo();
 });
 

@@ -1,8 +1,24 @@
 html, body {
+	
+	min-width: 400px;
+	margin: 0;
+    height: 100%;
  	color: white;
+	
 	background-color: black;
 	font-family: "Arial Black", Gadget, sans-serif;
+	cursor : default;
+	-webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
 }
+
+
+
+
 ul{
 	list-style-type: none;
 	width: 90%;
@@ -12,19 +28,18 @@ li {
 
 }
 #canvas {
-	background-color: white;
+	
 	position: relative;
 	border: solid;
 	border-color: white;
-
-
 }
 
 #divcanvas {
 	position: absolute;
 	left: 35%;
-	top: 10%;
+	top: 5%;
 }
+
 
 #contrButWrapper {
 	display: table;
@@ -35,7 +50,6 @@ li {
 	width: 30%;
 	/*height: 50%;*/
 	/*max-width:800px;*/
-	border: 2px solid white;
 	text-align: center;
 	vertical-align: middle;
 }
@@ -44,18 +58,8 @@ li {
 	position: relative;
 	vertical-align: middle;
 	color: black;
-	/*background-color: white;   !!!!!!!!!!*/
-	
-	/*float: left;*/
 	width: 46%;
-	
 	margin: 0 auto;
-	/*height: 50px;*/
-	
-	/*padding: 10px;*/
-	/*outline: solid;*/
-	border: 10px solid black;
-
 }
 
 .generate {
@@ -66,78 +70,91 @@ li {
 	color: black;
 	background-color: white;
 
-	
 	width: 100%;
-	height: 100px;
-
-	height: 50px;
-	border: 10px solid black;
+	height: 10%;
+	border: 5px solid black;
 }
 
 
 #controls, #help {
 	text-align: center;
 	width: 30%;
+
 }
 
 #controls tr, #controls  td,
 #help tr, #help  td {
-	font-size: 150%;
-	height: 100px;
-	background-color: black;	
-	border: 5px solid black;
+	
+	font-size: 110%;
+	height: 10%;
+	border: 2px solid black;
 	-webkit-transition: border 0.5s; /*HIGH CPU USAGE! */
-	transform: translate3d(0, 0, 0); /*high CPU usage issue(still not solved although)*/
+	transform: translate3d(0, 0, 0); /*high CPU usage solving(still not fixed although)*/
 	
 }
 
 #help {
+	
 	position: absolute;
 	text-align: center;
-	bottom : 10%;
+	bottom : 5%;
 	left: 10px;
-	border: 5px solid black;
+	border: 1px solid rgba(0, 0, 0, 0);
 	-webkit-transition: border 0.5s;
 	transform: translate3d(0, 0, 0);
+	/*z-index: 10;*/
 	
 }
 
-#help:hover, #start:hover,
-#reset:hover, #generate:hover {
-	border: 5px solid white;
-
+#start:hover,
+#reset:hover, #generate:hover, #followHeavy:hover {
+	border: 8px solid white;
 }
-
+#help:hover{
+	border: 6px solid white;
+}
 
 .info {
 	position: absolute;
 	top: 30%;
+	width: 30%;
 }
 
 .drop {
-	/*position: relative;
-    display: inline-block;
+	/*position: absolute;*/
+    /*display: inline-block;
     bottom : 20px;
 	left: 10px;
 	width: 30%;*/
 }
 
 .dropContent{
-	 display: none;
-	 position: absolute;
-	 top: 65%;
-	 left: 1%;
-	 z-index: 1;
-	 transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s, z-index 0s linear 0.01s;
+	color: white;
+	width: 30%;
+	font-size: 0.9vw;
+	display: block;
+	position: absolute;
+	top: 65%;
+	left: 1%;
+	opacity: 0;
+	transition: all 0.5s;
+	-moz-transition:all 0.5s; /* Firefox 4 */
+    -webkit-transition:all 0.5s; /* Safari and Chrome */
+    z-index: 0;
 }
+
+
 
 .show {
-	/*-webkit-transition: border 0.5s;*/
-	border: 5px solid black;
+	opacity: 1;
+	top: 45%;
 	display:block;
-	transition-delay: 0s, 0s, 0.3s;
+	position: absolute;
 }
 
-/*:hover {
-	border: 5px solid white;
-}*/
+.hide{
+	opacity: 0;
+	top: 65%;
+	display:block;
+	position: absolute;
+}
